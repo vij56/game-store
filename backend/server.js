@@ -5,11 +5,12 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://game-store-eta-rosy.vercel.app",
-  }),
-);
+// app.use(
+//   cors({
+//     origin: "https://game-store-eta-rosy.vercel.app",
+//   }),
+// );
+app.use(cors({ origin: "*" }));
 
 app.use(express.json());
 
