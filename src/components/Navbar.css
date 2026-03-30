@@ -1,0 +1,49 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px 30px;
+  background: #0f172a; /* dark gaming vibe */
+  color: white;
+}
+
+/* LOGO */
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* RIGHT SIDE */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* BUTTONS */
+.nav-right button {
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* CART */
+.cart-btn {
+  font-size: 18px;
+}
+
+/* LOGIN */
+.login-btn {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+/* REGISTER */
+.register-btn {
+  background: #22c55e;
+  color: black;
+}

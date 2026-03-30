@@ -1,0 +1,159 @@
+/* HERO BANNER */
+.hero-banner {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.hero-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+}
+
+.overlay h1 {
+  font-size: 40px;
+}
+
+/* MAIN CONTENT */
+.details-content {
+  display: flex;
+  gap: 40px;
+  padding: 30px;
+}
+
+/* LEFT SIDE */
+.left {
+  width: 60%;
+}
+
+.image-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.details-image {
+  width: 100%;
+  transition: transform 0.3s;
+}
+
+.details-image:hover {
+  transform: scale(1.05);
+}
+
+/* THUMBNAILS */
+.thumbnail-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbnail-row img {
+  width: 100px;
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* RIGHT SIDE */
+.details-info {
+  flex: 1;
+}
+
+/* PRICE */
+.price-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.discount {
+  background: #22c55e;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.original {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.sale {
+  font-size: 24px;
+  color: #22c55e;
+}
+
+/* BUTTON */
+.buy-btn {
+  width: 100%;
+  padding: 15px;
+  background: #22c55e;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* META */
+.meta p {
+  margin: 8px 0;
+  color: #ccc;
+}
+
+/* DESCRIPTION */
+.description {
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.rating span:hover {
+  transform: scale(1.2);
+}
+
+.rating {
+  margin-top: 15px;
+}
+
+.rating span {
+  transition: transform 0.2s;
+}
+
+.rating span:hover {
+  transform: scale(1.2);
+}
+
+.review-box textarea {
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  padding: 10px;
+  background: #1f2937;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.review-box button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #22c55e;
+  border: none;
+  cursor: pointer;
+}
+
+.review-item {
+  background: #111827;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
