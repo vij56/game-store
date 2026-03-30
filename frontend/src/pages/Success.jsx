@@ -11,11 +11,14 @@ export default function Success() {
   }, []);
 
   const fetchLatestOrder = async () => {
-    const res = await fetch("http://localhost:5000/api/orders/latest", {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/orders/latest`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     if (!res.ok) return;
 
@@ -58,7 +61,7 @@ Enjoy your game 🎉
   };
 
   const markAsDelivered = async () => {
-    await fetch("http://localhost:5000/api/orders/delivered", {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/orders/delivered`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

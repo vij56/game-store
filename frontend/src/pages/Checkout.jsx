@@ -29,7 +29,7 @@ export default function Checkout() {
   }, []);
 
   const fetchCart = async () => {
-    const res = await fetch("http://localhost:5000/api/cart", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -49,7 +49,7 @@ export default function Checkout() {
   const updateQty = async (gameId, qty) => {
     if (qty < 1) return;
 
-    const res = await fetch("http://localhost:5000/api/cart/update", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export default function Checkout() {
     }
 
     const res = await fetch(
-      "https://game-store.onrender.com/api/payment/create-order",
+      `${import.meta.env.VITE_API_URL}/api/payment/create-order`,
       {
         method: "POST",
         headers: {
@@ -121,7 +121,7 @@ export default function Checkout() {
 
       handler: async function (response) {
         const verifyRes = await fetch(
-          "http://localhost:5000/api/payment/verify",
+          `${import.meta.env.VITE_API_URL}/api/payment/verify`,
           {
             method: "POST",
             headers: {

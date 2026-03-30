@@ -22,7 +22,7 @@ export default function Cart() {
   // 🛒 FETCH CART
   const fetchCart = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/cart", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ export default function Cart() {
   // 🎮 FETCH ALL GAMES
   const fetchGames = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/games");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/games`);
       const data = await res.json();
       setGames(data || []);
     } catch (err) {
@@ -50,7 +50,7 @@ export default function Cart() {
 
   // ➕ ADD TO CART
   const addToCart = async (gameId) => {
-    const res = await fetch("http://localhost:5000/api/cart/add", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

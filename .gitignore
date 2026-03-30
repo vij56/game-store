@@ -2,7 +2,7 @@
 node_modules/
 
 # env files (IMPORTANT)
-.env
+/frontend/.env
 /backend/.env
 
 # build files

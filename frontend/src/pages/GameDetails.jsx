@@ -16,7 +16,9 @@ export default function GameDetails() {
     setComment("");
 
     const fetchGame = async () => {
-      const res = await fetch(`http://localhost:5000/api/games/${id}`);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/games/${id}`,
+      );
       const data = await res.json();
       setGame(data);
 
@@ -45,7 +47,7 @@ export default function GameDetails() {
 
     setLoadingCart(true);
 
-    const res = await fetch("http://localhost:5000/api/cart/add", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +85,7 @@ export default function GameDetails() {
       return;
     }
 
-    const res = await fetch("http://localhost:5000/api/games/rate", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/games/rate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -125,17 +127,20 @@ export default function GameDetails() {
       return;
     }
 
-    const res = await fetch("http://localhost:5000/api/games/review", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/games/review`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          gameId: game._id,
+          comment,
+        }),
       },
-      body: JSON.stringify({
-        gameId: game._id,
-        comment,
-      }),
-    });
+    );
 
     if (res.status === 401) {
       localStorage.removeItem("token");
