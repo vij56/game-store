@@ -22,6 +22,9 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
+console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
 const PORT = process.env.PORT || 5000;
 
 connectDB();
