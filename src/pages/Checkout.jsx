@@ -95,13 +95,16 @@ export default function Checkout() {
       return;
     }
 
-    const res = await fetch("http://localhost:5000/api/payment/create-order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      "https://game-store.onrender.com/api/payment/create-order",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: total }),
       },
-      body: JSON.stringify({ amount: total }),
-    });
+    );
 
     if (!res.ok) {
       alert("Failed to create order");

@@ -19,7 +19,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/games")
+    fetch("https://game-store-8tsh.onrender.com/api/games")
       .then((res) => res.json())
       .then((data) => {
         setGames(data);
