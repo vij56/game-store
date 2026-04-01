@@ -26,10 +26,15 @@ exports.register = async (req, res) => {
       email,
       password: hashedPassword,
       username,
+      role: req.body.role || "user",
     });
 
     const token = jwt.sign(
-      { id: user._id, username: user.username },
+      {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+      },
       process.env.JWT_SECRET,
       {
         expiresIn: "7d",
@@ -38,7 +43,8 @@ exports.register = async (req, res) => {
 
     res.json({ token });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ msg: "Server error" });
   }
 };
 
@@ -57,9 +63,17 @@ exports.login = async (req, res) => {
       return res.status(400).json({ msg: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      },
+    );
 
     res.json({ token });
   } catch (error) {

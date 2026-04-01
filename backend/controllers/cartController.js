@@ -75,3 +75,79 @@ exports.updateQuantity = async (req, res) => {
   await cart.save();
   res.json(cart);
 };
+
+exports.decreaseQty = async (req, res) => {
+  try {
+    const { gameId } = req.body;
+    const userId = req.user.id;
+
+    const cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return res.json({ items: [] });
+    }
+
+    const item = cart.items.find((i) => i.game.toString() === gameId);
+
+    if (!item) {
+      return res.json(cart);
+    }
+
+    // 🔥 decrease logic
+    if (item.quantity > 1) {
+      item.quantity -= 1;
+    } else {
+      // remove if qty = 1
+      cart.items = cart.items.filter((i) => i.game.toString() !== gameId);
+    }
+
+    await cart.save();
+
+    res.json(cart);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Error decreasing quantity" });
+  }
+};
+
+exports.removeItem = async (req, res) => {
+  try {
+    const { gameId } = req.body;
+    const userId = req.user.id;
+
+    const cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return res.json({ items: [] });
+    }
+
+    cart.items = cart.items.filter((i) => i.game.toString() !== gameId);
+
+    await cart.save();
+
+    res.json(cart);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Error removing item" });
+  }
+};
+
+exports.clearCart = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    let cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return res.json({ msg: "Cart already empty", items: [] });
+    }
+
+    cart.items = [];
+    await cart.save();
+
+    res.json({ msg: "Cart cleared", cart });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Error clearing cart" });
+  }
+};

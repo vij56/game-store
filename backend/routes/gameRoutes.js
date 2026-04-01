@@ -6,6 +6,7 @@ const {
   rateGame,
   addReview,
   deleteReview,
+  updateReview,
 } = require("../controllers/gameController");
 const auth = require("../middleware/auth");
 
@@ -14,5 +15,6 @@ router.get("/:id", getGame);
 router.post("/rate", auth, rateGame);
 router.post("/review", auth, addReview);
 router.post("/review/delete", auth, deleteReview);
+router.post("/review/update", auth, updateReview);
 
 module.exports = router;

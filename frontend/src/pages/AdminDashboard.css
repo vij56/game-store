@@ -1,0 +1,267 @@
+.admin-page {
+  padding: 32px;
+  color: white;
+  min-height: calc(100vh - 80px);
+}
+
+.admin-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.admin-label {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #7c96ff;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.admin-header h1 {
+  font-size: clamp(2rem, 2.4vw, 3rem);
+  margin: 0;
+}
+
+.admin-subtitle {
+  color: #c8d0ff;
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+.admin-add-button {
+  border: none;
+  background: linear-gradient(135deg, #5e7cff, #7c4dff);
+  color: white;
+  padding: 14px 24px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 18px 35px rgba(85, 102, 255, 0.25);
+}
+
+.admin-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.admin-stat-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 22px;
+  min-height: 120px;
+}
+
+.admin-stat-card.accent {
+  background: linear-gradient(
+    180deg,
+    rgba(94, 124, 255, 0.18),
+    rgba(124, 77, 255, 0.1)
+  );
+}
+
+.admin-stat-card span {
+  display: block;
+  color: #adb5ff;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.admin-stat-card strong {
+  font-size: 2rem;
+  display: block;
+}
+
+.admin-tools {
+  margin-bottom: 24px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  width: 100%;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: white;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search-box svg {
+  color: #7c96ff;
+  font-size: 1.1rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.admin-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: auto;
+}
+
+.admin-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.card-title-row h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.price-tag {
+  background: rgba(124, 77, 255, 0.16);
+  color: #d9d2ff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.admin-card p {
+  color: #c8d0ff;
+  line-height: 1.7;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.price-line {
+  color: #adb5ff;
+  font-size: 0.95rem;
+}
+
+.card-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  border: none;
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn.edit {
+  background: rgba(94, 124, 255, 0.15);
+  color: #e7e9ff;
+}
+
+.action-btn.delete {
+  background: rgba(255, 94, 94, 0.16);
+  color: #ffb3b3;
+}
+
+.admin-loading,
+.admin-empty {
+  grid-column: 1 / -1;
+  padding: 40px;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  text-align: center;
+  color: #c8d0ff;
+}
+
+/* Revenue chart */
+.admin-revenue-section {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+}
+
+.revenue-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin-top: 18px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.revenue-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 64px;
+}
+
+.revenue-value {
+  font-size: 0.72rem;
+  color: #7c96ff;
+  min-height: 16px;
+  text-align: center;
+}
+
+.revenue-bar {
+  width: 100%;
+  background: linear-gradient(180deg, #5e7cff, #7c4dff);
+  border-radius: 8px 8px 4px 4px;
+  min-height: 2px;
+  transition: height 0.4s ease;
+}
+
+.revenue-label {
+  font-size: 0.72rem;
+  color: #adb5ff;
+  text-align: center;
+  white-space: nowrap;
+}

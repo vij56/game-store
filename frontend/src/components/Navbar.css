@@ -1,49 +1,58 @@
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-
-  padding: 15px 30px;
-  background: #0f172a; /* dark gaming vibe */
-  color: white;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(6, 12, 30, 0.92);
+  backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* LOGO */
 .logo {
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--accent);
   cursor: pointer;
 }
 
-/* RIGHT SIDE */
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.85rem;
+  flex-wrap: wrap;
 }
 
-/* BUTTONS */
-.nav-right button {
-  padding: 8px 14px;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
+.btn {
+  padding: 0.75rem 1rem;
 }
 
-/* CART */
 .cart-btn {
-  font-size: 18px;
+  position: relative;
 }
 
-/* LOGIN */
-.login-btn {
-  background: transparent;
+.cart-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--danger);
   color: white;
-  border: 1px solid white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  min-width: 22px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255, 95, 118, 0.35);
 }
 
-/* REGISTER */
-.register-btn {
-  background: #22c55e;
-  color: black;
+.username {
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 0.5rem;
 }

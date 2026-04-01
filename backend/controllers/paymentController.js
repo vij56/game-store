@@ -30,13 +30,13 @@ exports.verifyPayment = async (req, res) => {
     .digest("hex");
 
   if (expectedSignature !== razorpay_signature) {
-    return res.status(400).json({ msg: "Invalid payment" });
+    return res.status(400).json({ success: false, msg: "Invalid payment" });
   }
 
   const cart = await Cart.findOne({ user: req.user.id }).populate("items.game");
 
   if (!cart || cart.items.length === 0) {
-    return res.status(400).json({ msg: "Cart is empty" });
+    return res.status(400).json({ success: false, msg: "Cart is empty" });
   }
 
   const total = cart.items.reduce(
@@ -60,5 +60,9 @@ exports.verifyPayment = async (req, res) => {
   cart.items = [];
   await cart.save();
 
-  res.json({ msg: "Payment verified", order: newOrder });
+  res.json({
+    success: true,
+    orderId: newOrder._id,
+    order: newOrder,
+  });
 };

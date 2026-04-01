@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Orders() {
@@ -7,16 +7,7 @@ export default function Orders() {
 
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
-    fetchOrders();
-  }, []);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,7 +22,20 @@ export default function Orders() {
 
     const data = await res.json();
     setOrders(data || []);
-  };
+  }, [navigate, token]);
+
+  useEffect(() => {
+    const loadOrders = async () => {
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      await fetchOrders();
+    };
+
+    loadOrders();
+  }, [fetchOrders, navigate, token]);
 
   return (
     <div style={{ padding: "30px", color: "white" }}>

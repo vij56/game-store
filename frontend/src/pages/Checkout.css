@@ -1,93 +1,45 @@
+/* 🔥 FORM CONTAINER */
 .checkout-container {
-  padding: 40px;
-  color: white;
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
 }
 
-.checkout-title {
-  margin-bottom: 30px;
-}
-
-.checkout-grid {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 30px;
-}
-
-/* FORM */
-.checkout-form {
-  background: #1f1f2e;
-  padding: 25px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.checkout-form input {
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: #2c2c3d;
-  color: white;
-}
-
-/* SUMMARY */
-.checkout-summary {
-  background: #1f1f2e;
-  padding: 25px;
-  border-radius: 12px;
-  height: fit-content;
-}
-
-.summary-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.summary-total {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  border-top: 1px solid #444;
-  padding-top: 15px;
-}
-
-/* BUTTON */
-.pay-btn {
+/* 🔥 MATCH INPUT + SELECT STYLE */
+input,
+textarea,
+select {
   width: 100%;
-  margin-top: 20px;
-  padding: 15px;
-  border: none;
+  padding: 12px;
+  margin-bottom: 12px;
+
   border-radius: 10px;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+
   color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+  outline: none;
+
+  transition: 0.2s;
+
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.pay-btn:hover {
-  transform: scale(1.03);
-}
-
-.qty-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 5px;
-}
-
-.qty-controls button {
-  padding: 5px 10px;
-  border: none;
-  background: #333;
-  color: white;
-  border-radius: 6px;
+/* 🔥 SELECT FIX */
+select {
+  appearance: none;
   cursor: pointer;
 }
 
-.qty-controls span {
-  min-width: 20px;
-  text-align: center;
+/* 🔥 FOCUS EFFECT */
+input:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #00eaff;
+  box-shadow: 0 0 8px rgba(0, 234, 255, 0.5);
 }

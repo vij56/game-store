@@ -25,13 +25,19 @@ export default function HeroSlider() {
     <div className="slider">
       <div
         className="slider-track"
-        style={{
-          transform: `translateX(-${index * 100}%)`,
-        }}
+        style={{ transform: `translateX(-${index * 100}%)` }}
       >
         {images.map((img, i) => (
-          <img key={i} src={img} alt="game banner" />
+          <img key={i} src={img} alt="banner" />
         ))}
+      </div>
+
+      <div className="overlay">
+        <h1 className="hero-title">Discover Amazing Games 🎮</h1>
+
+        <p className="hero-subtitle">
+          Explore top trending and best-selling games
+        </p>
       </div>
     </div>
   );

@@ -1,159 +1,274 @@
-/* HERO BANNER */
-.hero-banner {
-  position: relative;
-  height: 300px;
-  overflow: hidden;
+.game-details-page {
+  padding: 30px;
+  color: #eef2ff;
 }
 
-.hero-banner img {
+.gd-loading {
+  margin: 2rem auto;
+  max-width: 1100px;
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  text-align: center;
+  font-weight: 700;
+}
+
+.gd-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) 1fr;
+  gap: clamp(1rem, 2.2vw, 2rem);
+  align-items: stretch;
+  animation: gdFadeInUp 0.45s ease both;
+}
+
+.gd-media-card,
+.gd-main-card,
+.gd-panel {
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.16);
+}
+
+.gd-media-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 460px;
+}
+
+.gd-cover {
   width: 100%;
   height: 100%;
+  min-height: 460px;
   object-fit: cover;
-  filter: brightness(0.6);
 }
 
-.overlay {
+.gd-badge {
   position: absolute;
-  bottom: 20px;
-  left: 30px;
+  top: 0.95rem;
+  left: 0.95rem;
+  padding: 0.42rem 0.72rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5e7cff, #7c4dff);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
-.overlay h1 {
-  font-size: 40px;
-}
-
-/* MAIN CONTENT */
-.details-content {
+.gd-main-card {
+  padding: clamp(1.1rem, 2.1vw, 2rem);
   display: flex;
-  gap: 40px;
-  padding: 30px;
+  flex-direction: column;
+  gap: 0.9rem;
 }
 
-/* LEFT SIDE */
-.left {
-  width: 60%;
+.gd-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+  color: #7c96ff;
+  margin: 0;
 }
 
-.image-wrapper {
-  border-radius: 10px;
-  overflow: hidden;
+.gd-title {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  line-height: 1.05;
+  color: #fff;
 }
 
-.details-image {
-  width: 100%;
-  transition: transform 0.3s;
+.gd-subtitle {
+  margin: 0;
+  color: #c8d0ff;
+  line-height: 1.65;
 }
 
-.details-image:hover {
-  transform: scale(1.05);
-}
-
-/* THUMBNAILS */
-.thumbnail-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.thumbnail-row img {
-  width: 100px;
-  height: 60px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-/* RIGHT SIDE */
-.details-info {
-  flex: 1;
-}
-
-/* PRICE */
-.price-box {
+.gd-price-box {
+  margin-top: 0.35rem;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 0.8rem;
+  flex-wrap: wrap;
 }
 
-.discount {
-  background: #22c55e;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.original {
+.gd-old {
   text-decoration: line-through;
-  color: gray;
+  color: #9fb3d3;
+  font-size: 1rem;
 }
 
-.sale {
-  font-size: 24px;
-  color: #22c55e;
+.gd-sale {
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  font-weight: 800;
+  color: var(--accent);
 }
 
-/* BUTTON */
-.buy-btn {
-  width: 100%;
-  padding: 15px;
-  background: #22c55e;
+.gd-pill {
+  padding: 0.35rem 0.62rem;
+  border-radius: 999px;
   border: none;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 8px;
+  background: rgba(124, 77, 255, 0.16);
+  color: #d9d2ff;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
-/* META */
-.meta p {
-  margin: 8px 0;
-  color: #ccc;
+.gd-actions {
+  margin-top: 0.4rem;
 }
 
-/* DESCRIPTION */
-.description {
-  padding: 30px;
-  max-width: 900px;
-  margin: auto;
+.gd-add-btn {
+  min-width: 170px;
 }
 
-.rating span:hover {
-  transform: scale(1.2);
+.gd-meta-grid {
+  margin-top: 0.6rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
 }
 
-.rating {
-  margin-top: 15px;
+.gd-meta-item {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.rating span {
-  transition: transform 0.2s;
+.gd-meta-item span {
+  font-size: 0.72rem;
+  color: #adb5ff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.rating span:hover {
-  transform: scale(1.2);
+.gd-meta-item strong {
+  color: #fff;
+  font-size: 0.95rem;
 }
 
-.review-box textarea {
-  width: 100%;
-  height: 100px;
-  margin-top: 10px;
-  padding: 10px;
-  background: #1f2937;
-  color: white;
-  border: none;
-  border-radius: 6px;
+.gd-sections {
+  max-width: 1100px;
+  margin: 1rem auto 0;
+  display: grid;
+  gap: 1rem;
+  animation: gdFadeInUp 0.55s ease both;
 }
 
-.review-box button {
-  margin-top: 10px;
-  padding: 10px 15px;
-  background: #22c55e;
-  border: none;
-  cursor: pointer;
+.gd-panel {
+  padding: clamp(1rem, 2vw, 1.4rem);
 }
 
-.review-item {
-  background: #111827;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 6px;
+.gd-panel h2,
+.gd-panel h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.gd-panel p {
+  margin: 0;
+  color: #c8d0ff;
+  line-height: 1.72;
+}
+
+.gd-reviews-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.gd-review-item {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.85rem 0.95rem;
+}
+
+.gd-review-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.gd-review-author {
+  font-weight: 700;
+  color: #fff;
+}
+
+.gd-review-rating {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.gd-review-comment {
+  margin: 0;
+  color: #c8d0ff;
+}
+
+.gd-no-reviews {
+  color: #c8d0ff;
+}
+
+.gd-media-card,
+.gd-main-card,
+.gd-panel,
+.gd-review-item,
+.gd-meta-item {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.gd-main-card:hover,
+.gd-panel:hover {
+  transform: translateY(-2px);
+  border-color: rgba(124, 150, 255, 0.25);
+  box-shadow: 0 26px 58px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes gdFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 920px) {
+  .gd-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .gd-media-card {
+    min-height: 320px;
+  }
+
+  .gd-cover {
+    min-height: 320px;
+    max-height: 420px;
+  }
+}
+
+@media (max-width: 620px) {
+  .gd-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gd-main-card,
+  .gd-panel {
+    border-radius: 22px;
+  }
 }

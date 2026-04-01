@@ -1,0 +1,76 @@
+.success-page {
+  padding: 4.5rem 1.4rem 3rem;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.success-hero {
+  background: linear-gradient(
+    140deg,
+    rgba(12, 24, 58, 0.95),
+    rgba(10, 19, 44, 0.92)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  padding: 2rem;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.success-kicker {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: #8bb8ff;
+  font-weight: 700;
+}
+
+.success-hero h1 {
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  line-height: 1.08;
+  margin-bottom: 0.9rem;
+  color: #eaf1ff;
+}
+
+.success-subtitle {
+  color: #afc2df;
+  max-width: 780px;
+  line-height: 1.8;
+}
+
+.success-actions {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.success-description {
+  text-align: left;
+  padding: 1.8rem;
+  border-radius: 24px;
+}
+
+.success-description h2 {
+  margin-bottom: 0.8rem;
+  color: #dff4ff;
+}
+
+.success-description p {
+  color: #b8c9e3;
+  line-height: 1.95;
+  white-space: pre-line;
+}
+
+@media (max-width: 768px) {
+  .success-hero,
+  .success-description {
+    padding: 1.35rem;
+    border-radius: 20px;
+  }
+
+  .success-page {
+    padding: 2.6rem 1rem 2rem;
+  }
+}

@@ -15,7 +15,7 @@ export default function Register() {
     if (token) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   const handleRegister = async () => {
     const res = await fetch(
@@ -42,7 +42,8 @@ export default function Register() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h1>Create Account</h1>
+        <h1 className="auth-title">Create Your Account 🚀</h1>
+        <p className="auth-subtitle">Join and start exploring amazing games</p>
 
         <input
           type="text"
