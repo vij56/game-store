@@ -32,10 +32,10 @@ export default function HeroSlider() {
         ))}
       </div>
 
-      <div className="overlay">
-        <h1 className="hero-title">Discover Amazing Games 🎮</h1>
+      <div className="hero-overlay">
+        <h1 className="hero-banner-title">Discover Amazing Games 🎮</h1>
 
-        <p className="hero-subtitle">
+        <p className="hero-banner-subtitle">
           Explore top trending and best-selling games
         </p>
       </div>

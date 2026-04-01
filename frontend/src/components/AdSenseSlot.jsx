@@ -13,6 +13,7 @@ function AdSenseSlot({
   fallbackClassName = "adsense-fallback",
 }) {
   const rawClient = import.meta.env.VITE_ADSENSE_CLIENT;
+  const isDev = import.meta.env.DEV;
   const client = useMemo(() => normalizeClient(rawClient), [rawClient]);
   const isConfigured = Boolean(client && slot);
 
@@ -56,6 +57,7 @@ function AdSenseSlot({
       data-ad-slot={slot}
       data-ad-format={format}
       data-full-width-responsive={responsive ? "true" : "false"}
+      data-adtest={isDev ? "on" : undefined}
     />
   );
 }

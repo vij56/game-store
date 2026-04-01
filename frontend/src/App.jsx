@@ -133,8 +133,8 @@ function App() {
           <div className="side-ads-card">
             <AdSenseSlot
               slot={leftTopSlot}
-              format="vertical"
-              responsive={false}
+              format="auto"
+              responsive={true}
               adClassName="side-adsense-ins"
               fallbackClassName="adsense-fallback adsense-fallback-side"
             />
@@ -142,8 +142,8 @@ function App() {
           <div className="side-ads-card">
             <AdSenseSlot
               slot={leftBottomSlot}
-              format="vertical"
-              responsive={false}
+              format="auto"
+              responsive={true}
               adClassName="side-adsense-ins"
               fallbackClassName="adsense-fallback adsense-fallback-side"
             />
@@ -223,8 +223,8 @@ function App() {
           <div className="side-ads-card">
             <AdSenseSlot
               slot={rightTopSlot}
-              format="vertical"
-              responsive={false}
+              format="auto"
+              responsive={true}
               adClassName="side-adsense-ins"
               fallbackClassName="adsense-fallback adsense-fallback-side"
             />
@@ -232,8 +232,8 @@ function App() {
           <div className="side-ads-card">
             <AdSenseSlot
               slot={rightBottomSlot}
-              format="vertical"
-              responsive={false}
+              format="auto"
+              responsive={true}
               adClassName="side-adsense-ins"
               fallbackClassName="adsense-fallback adsense-fallback-side"
             />
