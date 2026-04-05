@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -32,10 +33,9 @@ export default function Register() {
     const data = await res.json();
 
     if (data.token) {
-      localStorage.setItem("token", data.token);
-      navigate("/");
+      navigate("/login");
     } else {
-      alert(data.msg);
+      toast.error(data.msg || "Registration failed");
     }
   };
 

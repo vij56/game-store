@@ -6,6 +6,13 @@ const {
   updateGame,
   deleteGame,
   getAllGamesAdmin,
+  getLibraryUsers,
+  getUserLibrary,
+  removeGameFromUserLibrary,
+  addAdminReview,
+  updateAdminReview,
+  getAdminGameReviews,
+  deleteAdminReview,
 } = require("../controllers/adminGameController");
 
 const auth = require("../middleware/auth");
@@ -85,6 +92,26 @@ router.post(
     const imageUrl = `${process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`}/uploads/${req.file.filename}`;
     res.json({ imageUrl });
   },
+);
+
+// Admin review management — MUST come before /:id wildcard routes
+router.get("/reviews/:gameId", auth, adminMiddleware, getAdminGameReviews);
+router.post("/reviews", auth, adminMiddleware, addAdminReview);
+router.put("/reviews/:id", auth, adminMiddleware, updateAdminReview);
+router.delete("/reviews/:id", auth, adminMiddleware, deleteAdminReview);
+
+router.get("/library-users", auth, adminMiddleware, getLibraryUsers);
+router.get(
+  "/library-users/:userId/library",
+  auth,
+  adminMiddleware,
+  getUserLibrary,
+);
+router.delete(
+  "/library-users/:userId/library/:gameId",
+  auth,
+  adminMiddleware,
+  removeGameFromUserLibrary,
 );
 
 // Add game

@@ -23,7 +23,7 @@
 
 .hero-overlay {
   position: absolute;
-  top: 50%;
+  top: 44%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
@@ -33,10 +33,24 @@
 
 .hero-banner-title {
   font-size: clamp(2.8rem, 4vw, 4.5rem);
-  line-height: 0.95;
+  line-height: 1.15;
+  padding-bottom: 0.1em;
   margin-bottom: 0.8rem;
-  color: var(--accent);
-  text-shadow: 0 0 25px rgba(93, 215, 255, 0.45);
+  color: transparent;
+  background-image: linear-gradient(
+    115deg,
+    #86efac 0%,
+    #22c55e 30%,
+    #dcfce7 50%,
+    #16a34a 70%,
+    #86efac 100%
+  );
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 22px rgba(34, 197, 94, 0.28);
+  animation: heroTitleRevealLR 3.6s ease-in-out infinite;
+  will-change: transform, clip-path, opacity;
 }
 
 .hero-banner-subtitle {
@@ -44,7 +58,46 @@
   font-weight: 700;
   line-height: 1.1;
   color: var(--accent);
-  text-shadow: 0 0 18px rgba(93, 215, 255, 0.35);
+  text-shadow: 0 0 18px rgba(34, 197, 94, 0.35);
   margin-bottom: 0;
   max-width: 100%;
+  animation: heroSubtitleWave 2.8s ease-in-out infinite;
+}
+
+@keyframes heroTitleRevealLR {
+  0% {
+    opacity: 0;
+    transform: translateX(-36px);
+    clip-path: inset(0 100% 0 0);
+  }
+  24% {
+    opacity: 1;
+    transform: translateX(0);
+    clip-path: inset(0 0 0 0);
+  }
+  78% {
+    opacity: 1;
+    transform: translateX(0);
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(16px);
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+@keyframes heroSubtitleWave {
+  0% {
+    opacity: 0.75;
+    transform: translateY(6px) scale(0.985);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0.75;
+    transform: translateY(6px) scale(0.985);
+  }
 }

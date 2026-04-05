@@ -1,0 +1,25 @@
+{
+  "name": "gaming-store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vij56/game-store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vij56/game-store/issues"
+  },
+  "homepage": "https://github.com/vij56/game-store#readme",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.59.0"
+  }
+}

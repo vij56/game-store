@@ -10,7 +10,7 @@ export default function SearchBar({ value, onChange }) {
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Search game by title"
+          placeholder="Search by title or App ID"
         />
       </div>
     </div>

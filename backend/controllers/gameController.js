@@ -28,7 +28,43 @@ exports.getGame = async (req, res) => {
       return res.status(404).json({ msg: "Game not found" });
     }
 
-    res.json(game);
+    const persistedReviews = await Review.find({ gameId: game._id })
+      .populate("userId", "email username")
+      .sort({ createdAt: -1 });
+
+    const normalizedPersistedReviews = persistedReviews.map((review) => ({
+      _id: review._id,
+      user: review.username
+        ? { username: review.username }
+        : review.userId
+          ? {
+              _id: review.userId._id,
+              username: review.userId.username,
+              email: review.userId.email,
+            }
+          : null,
+      comment: review.comment,
+      rating: review.rating,
+      createdAt: review.createdAt,
+    }));
+
+    const normalizedLegacyReviews = (game.reviews || []).map(
+      (review, index) => ({
+        _id: `legacy-${index}`,
+        user: review.user,
+        comment: review.comment,
+        rating: review.rating,
+        createdAt: review.createdAt,
+      }),
+    );
+
+    const gameData = game.toObject();
+    gameData.reviews = [
+      ...normalizedPersistedReviews,
+      ...normalizedLegacyReviews,
+    ];
+
+    res.json(gameData);
   } catch (err) {
     res.status(500).json({ msg: "Error fetching game" });
   }
@@ -69,7 +105,7 @@ exports.addReview = async (req, res) => {
     const userId = req.user.id;
 
     // 1️⃣ Get all user orders
-    const orders = await Order.find({ userId });
+    const orders = await Order.find({ user: userId });
 
     // 2️⃣ Check if user purchased this game
     let hasPurchased = false;
@@ -78,7 +114,7 @@ exports.addReview = async (req, res) => {
       if (!order.items || !Array.isArray(order.items)) continue;
 
       const found = order.items.find(
-        (item) => String(item.gameId) === String(gameId),
+        (item) => String(item.game) === String(gameId),
       );
 
       if (found) {
@@ -150,17 +186,15 @@ exports.updateReview = async (req, res) => {
 exports.deleteReview = async (req, res) => {
   try {
     const { reviewId } = req.body;
-    const userId = req.user.id;
+
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ msg: "Only admin can delete reviews" });
+    }
 
     const review = await Review.findById(reviewId);
 
     if (!review) {
       return res.status(404).json({ msg: "Review not found" });
-    }
-
-    // Allow owner OR admin
-    if (String(review.userId) !== String(userId) && req.user.role !== "admin") {
-      return res.status(403).json({ msg: "Unauthorized" });
     }
 
     await review.deleteOne();

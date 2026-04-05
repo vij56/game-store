@@ -5,7 +5,13 @@ const reviewSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false,
+      default: null,
+    },
+    // For admin-created reviews that use a custom display name
+    username: {
+      type: String,
+      default: null,
     },
     gameId: {
       type: mongoose.Schema.Types.ObjectId,

@@ -127,7 +127,10 @@ export default function Cart() {
         return;
       }
 
-      showAddedToCartToast(game);
+      showAddedToCartToast(game, {
+        showContinueShopping: false,
+        showGoToCart: false,
+      });
       await fetchCart();
     } catch (err) {
       console.error(err);
@@ -196,9 +199,10 @@ export default function Cart() {
       <div className="cart-layout">
         <section className="cart-main">
           <div className="cart-panel-header">
-            <p className="cart-kicker">YOUR CART</p>
-            <h1>{items.length === 0 ? "Cart is empty 🛒" : "Your Cart"}</h1>
-            <p className="cart-panel-copy">
+            <h1 className="modern-hero-title">
+              {items.length === 0 ? "Cart is empty 🛒" : "Your Cart"}
+            </h1>
+            <p className="cart-panel-copy modern-hero-subtitle">
               {items.length === 0
                 ? "Your selected games will appear here once you add them from the store."
                 : "Review your selected games and continue when you are ready to check out."}
@@ -221,9 +225,13 @@ export default function Cart() {
                     <p className="cart-price">₹{item.game.salePrice}</p>
 
                     <div className="quantity-control">
-                      <button onClick={() => decreaseQty(item.game._id)}>-</button>
+                      <button onClick={() => decreaseQty(item.game._id)}>
+                        -
+                      </button>
                       <span>{item.quantity}</span>
-                      <button onClick={() => increaseQty(item.game._id)}>+</button>
+                      <button onClick={() => increaseQty(item.game._id)}>
+                        +
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -245,10 +253,11 @@ export default function Cart() {
 
         <aside className="suggestion-section cart-suggestion-section">
           <div className="browse-panel-header">
-            <p className="cart-kicker">DISCOVER MORE</p>
-            <h2>Browse More Games 🎮</h2>
-            <p className="cart-panel-copy">
-              Explore more titles while your cart is ready on the left.
+            <h2 className="modern-hero-title modern-hero-title--compact">
+              Browse More Games 🎮
+            </h2>
+            <p className="cart-panel-copy modern-hero-subtitle modern-hero-subtitle--compact">
+              Explore more titles.
             </p>
           </div>
 
@@ -269,6 +278,7 @@ export default function Cart() {
                     onAddToCart={(g) => addToCart(g._id, g)}
                     disableClick={true}
                     dragging={isDragging}
+                    titleTopPriceBottom={true}
                   />
                 </div>
               ))}

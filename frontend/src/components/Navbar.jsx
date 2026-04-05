@@ -73,7 +73,12 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <div className="logo" onClick={() => navigate("/")}>
-        🎮 GameStore
+        <img
+          src="/game-skull-logo-f943fd59-cd07-4a42-bf66-63e21f913aee.jpg"
+          alt="ByteArena Shop logo"
+          className="logo-image"
+        />
+        <span className="logo-text">ByteArena Shop</span>
       </div>
 
       <div className="nav-right">
@@ -103,6 +108,10 @@ export default function Navbar() {
                 >
                   <FaShoppingCart className="cart-icon" />
                   {count > 0 && <span className="cart-badge">{count}</span>}
+                </button>
+
+                <button className="btn" onClick={() => navigate("/library")}>
+                  My Library
                 </button>
 
                 <button className="btn" onClick={handleLogout}>

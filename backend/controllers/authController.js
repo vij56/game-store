@@ -80,3 +80,13 @@ exports.login = async (req, res) => {
     console.log(error);
   }
 };
+
+// GET public usernames (no sensitive data)
+exports.getUsernames = async (req, res) => {
+  try {
+    const users = await User.find({}, "username -_id");
+    res.json(users.map((u) => u.username));
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};

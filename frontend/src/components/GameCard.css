@@ -27,6 +27,21 @@
   border-radius: 10px;
 }
 
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 7;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #04120a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  border-radius: 999px;
+  padding: 6px 10px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+}
+
 /* CONTENT */
 .card-content {
   position: relative;
@@ -84,6 +99,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
+  pointer-events: auto;
 
   opacity: 0;
   transition: 0.3s;
@@ -96,23 +113,51 @@
 .hover-buttons {
   display: flex;
   gap: 8px;
+  z-index: 6;
 }
 
-/* BUTTON FIX */
-.hover-buttons .btn {
-  padding: 6px 10px;
-  font-size: 12px;
-  border-radius: 6px;
+.game-card .hover-buttons .btn {
+  min-width: 72px !important;
+  padding: 9px 8px !important;
+  min-height: 34px;
+  font-size: 10px !important;
+  line-height: 1.1;
+  font-weight: 700;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  box-shadow: none;
+  transform: none;
+  flex: 0 0 auto;
 }
 
-/* INFO BUTTON */
-.info-btn {
-  background: #3b82f6;
-  color: white;
+.hover-buttons .btn:hover {
+  transform: translateY(-1px);
+}
+
+.hover-buttons .add-cart-btn {
+  background: #22c55e;
+  color: #04120a;
+}
+
+.hover-buttons .info-btn {
+  background: #1f2937;
+  color: #ffffff;
 }
 
 .card-row {
   align-items: center;
+}
+
+.game-title-top {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price-bottom {
+  margin-top: auto;
 }
 
 .game-row {

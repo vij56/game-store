@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -31,11 +32,11 @@ export default function Login() {
         localStorage.setItem("token", data.token);
         navigate("/");
       } else {
-        alert(data.msg || "Login failed");
+        toast.error(data.msg || "Login failed");
       }
     } catch (err) {
       console.error(err);
-      alert("Server error");
+      toast.error("Server error");
     }
   };
 

@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
+import InvoiceDownload from "./pages/InvoiceDownload";
 import AdminDashboard from "./pages/AdminDashboard";
 import { jwtDecode } from "jwt-decode";
 
@@ -21,6 +22,8 @@ import toast from "react-hot-toast";
 import { showAddedToCartToast } from "./utils/showAddedToCartToast";
 import Library from "./pages/Library";
 import AdSenseSlot from "./components/AdSenseSlot";
+import CookieConsent from "react-cookie-consent";
+import PurchasePopup from "./components/PurchasePopup";
 
 function Home() {
   const [games, setGames] = useState([]);
@@ -36,7 +39,7 @@ function Home() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("Please login first");
+      toast.error("Please login first");
       return;
     }
 
@@ -58,7 +61,10 @@ function Home() {
         return;
       }
 
-      showAddedToCartToast(game);
+      showAddedToCartToast(game, {
+        showContinueShopping: true,
+        showGoToCart: true,
+      });
     } catch (error) {
       console.error(error);
       toast.error("Server error");
@@ -81,15 +87,18 @@ function Home() {
   if (loading) return <h2 style={{ color: "white" }}>Loading...</h2>;
 
   const filteredGames = search.trim()
-    ? games.filter((g) =>
-        g.title.toLowerCase().includes(search.trim().toLowerCase()),
-      )
+    ? games.filter((g) => {
+        const query = search.trim().toLowerCase();
+        const titleMatch = (g.title || "").toLowerCase().includes(query);
+        const appIdMatch = String(g.appId || "").includes(query);
+        return titleMatch || appIdMatch;
+      })
     : games;
 
   return (
     <>
       <SearchBar value={search} onChange={setSearch} />
-      <HeroSlider />
+      <HeroSlider games={games} />
       <SectionTitle title="🔥 Featured Games" />
 
       <GameList games={filteredGames} addToCart={addToCart} />
@@ -124,123 +133,183 @@ function App() {
   })();
 
   return (
-    <div className="app-layout">
-      <aside
-        className="side-ads side-ads-left"
-        aria-label="Left advertisement rail"
-      >
-        <div className="side-ads-stack">
-          <div className="side-ads-card">
-            <AdSenseSlot
-              slot={leftTopSlot}
-              format="auto"
-              responsive={true}
-              adClassName="side-adsense-ins"
-              fallbackClassName="adsense-fallback adsense-fallback-side"
-            />
+    <>
+      <div className="app-layout">
+        <aside
+          className="side-ads side-ads-left"
+          aria-label="Left advertisement rail"
+        >
+          <div className="side-ads-stack">
+            <div className="side-ads-card">
+              <AdSenseSlot
+                slot={leftTopSlot}
+                format="auto"
+                responsive={true}
+                adClassName="side-adsense-ins"
+                fallbackClassName="adsense-fallback adsense-fallback-side"
+              />
+            </div>
+            <div className="side-ads-card">
+              <AdSenseSlot
+                slot={leftBottomSlot}
+                format="auto"
+                responsive={true}
+                adClassName="side-adsense-ins"
+                fallbackClassName="adsense-fallback adsense-fallback-side"
+              />
+            </div>
           </div>
-          <div className="side-ads-card">
-            <AdSenseSlot
-              slot={leftBottomSlot}
-              format="auto"
-              responsive={true}
-              adClassName="side-adsense-ins"
-              fallbackClassName="adsense-fallback adsense-fallback-side"
-            />
-          </div>
+        </aside>
+
+        <div className="app-center">
+          <Navbar />
+          <Toaster
+            position="top-center"
+            containerStyle={{
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              position: "fixed",
+              pointerEvents: "none",
+            }}
+          />
+
+          <main className="app-content">
+            <div
+              className="mobile-ads mobile-ads-top"
+              aria-label="Top mobile advertisement"
+            >
+              <AdSenseSlot
+                slot={import.meta.env.VITE_ADSENSE_MOBILE_TOP_SLOT}
+                format="auto"
+                responsive={true}
+                adClassName="mobile-adsense-ins"
+                fallbackClassName="adsense-fallback adsense-fallback-compact"
+              />
+            </div>
+
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/game/:id" element={<GameDetails />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/success" element={<Success />} />
+              <Route
+                path="/invoice/:orderId/:signature"
+                element={<InvoiceDownload />}
+              />
+              <Route path="/library" element={<Library />} />
+              <Route
+                path="/admin"
+                element={
+                  user?.role === "admin" ? (
+                    <AdminDashboard />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                }
+              />
+            </Routes>
+
+            <div
+              className="mobile-ads mobile-ads-bottom"
+              aria-label="Bottom mobile advertisement"
+            >
+              <AdSenseSlot
+                slot={import.meta.env.VITE_ADSENSE_MOBILE_BOTTOM_SLOT}
+                format="auto"
+                responsive={true}
+                adClassName="mobile-adsense-ins"
+                fallbackClassName="adsense-fallback adsense-fallback-compact"
+              />
+            </div>
+          </main>
         </div>
-      </aside>
 
-      <div className="app-center">
-        <Navbar />
-        <Toaster
-          position="top-center"
-          containerStyle={{
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            position: "fixed",
-            pointerEvents: "none",
-          }}
-        />
-
-        <main className="app-content">
-          <div
-            className="mobile-ads mobile-ads-top"
-            aria-label="Top mobile advertisement"
-          >
-            <AdSenseSlot
-              slot={import.meta.env.VITE_ADSENSE_MOBILE_TOP_SLOT}
-              format="auto"
-              responsive={true}
-              adClassName="mobile-adsense-ins"
-              fallbackClassName="adsense-fallback adsense-fallback-compact"
-            />
+        <aside
+          className="side-ads side-ads-right"
+          aria-label="Right advertisement rail"
+        >
+          <div className="side-ads-stack">
+            <div className="side-ads-card">
+              <AdSenseSlot
+                slot={rightTopSlot}
+                format="auto"
+                responsive={true}
+                adClassName="side-adsense-ins"
+                fallbackClassName="adsense-fallback adsense-fallback-side"
+              />
+            </div>
+            <div className="side-ads-card">
+              <AdSenseSlot
+                slot={rightBottomSlot}
+                format="auto"
+                responsive={true}
+                adClassName="side-adsense-ins"
+                fallbackClassName="adsense-fallback adsense-fallback-side"
+              />
+            </div>
           </div>
-
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/game/:id" element={<GameDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/success" element={<Success />} />
-            <Route path="/library" element={<Library />} />
-            <Route
-              path="/admin"
-              element={
-                user?.role === "admin" ? (
-                  <AdminDashboard />
-                ) : (
-                  <Navigate to="/" />
-                )
-              }
-            />
-          </Routes>
-
-          <div
-            className="mobile-ads mobile-ads-bottom"
-            aria-label="Bottom mobile advertisement"
-          >
-            <AdSenseSlot
-              slot={import.meta.env.VITE_ADSENSE_MOBILE_BOTTOM_SLOT}
-              format="auto"
-              responsive={true}
-              adClassName="mobile-adsense-ins"
-              fallbackClassName="adsense-fallback adsense-fallback-compact"
-            />
-          </div>
-        </main>
+        </aside>
       </div>
 
-      <aside
-        className="side-ads side-ads-right"
-        aria-label="Right advertisement rail"
+      <CookieConsent
+        location="bottom"
+        buttonText="Accept"
+        declineButtonText="Decline"
+        enableDeclineButton={true}
+        cookieName="gamingStoreConsent"
+        expires={365}
+        sameSite="lax"
+        style={{
+          background: "rgba(2, 6, 23, 0.92)",
+          borderTop: "1px solid rgba(0, 234, 255, 0.35)",
+          boxShadow: "0 -12px 35px rgba(0, 0, 0, 0.35)",
+          zIndex: 9999,
+        }}
+        contentStyle={{
+          margin: "0",
+          fontSize: "14px",
+          lineHeight: "1.55",
+          color: "#e2e8f0",
+        }}
+        buttonStyle={{
+          background: "#22c55e",
+          color: "#04120a",
+          borderRadius: "8px",
+          border: "none",
+          boxShadow: "0 0 14px rgba(34, 197, 94, 0.3)",
+          padding: "10px 16px",
+          fontWeight: 700,
+          cursor: "pointer",
+        }}
+        declineButtonStyle={{
+          background: "transparent",
+          color: "#e2e8f0",
+          borderRadius: "8px",
+          border: "1px solid rgba(148, 163, 184, 0.6)",
+          padding: "10px 16px",
+          fontWeight: 600,
+          cursor: "pointer",
+        }}
       >
-        <div className="side-ads-stack">
-          <div className="side-ads-card">
-            <AdSenseSlot
-              slot={rightTopSlot}
-              format="auto"
-              responsive={true}
-              adClassName="side-adsense-ins"
-              fallbackClassName="adsense-fallback adsense-fallback-side"
-            />
-          </div>
-          <div className="side-ads-card">
-            <AdSenseSlot
-              slot={rightBottomSlot}
-              format="auto"
-              responsive={true}
-              adClassName="side-adsense-ins"
-              fallbackClassName="adsense-fallback adsense-fallback-side"
-            />
-          </div>
-        </div>
-      </aside>
-    </div>
+        We use cookies and similar technologies to deliver relevant ads and
+        understand site usage. By clicking Accept, you agree to this use.
+        <a
+          href="https://policies.google.com/technologies/ads"
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: "#67e8f9", marginLeft: "8px", fontWeight: 600 }}
+        >
+          Learn more
+        </a>
+      </CookieConsent>
+
+      <PurchasePopup />
+    </>
   );
 }
 

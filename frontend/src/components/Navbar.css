@@ -14,11 +14,36 @@
 }
 
 .logo {
-  font-size: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  color: var(--accent);
+  letter-spacing: 0.04em;
+  color: #d9ffef;
   cursor: pointer;
+}
+
+.logo-image {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.3);
+}
+
+.logo-text {
+  display: inline-block;
+  color: transparent;
+  background-image: linear-gradient(
+    120deg,
+    #dcfce7 0%,
+    #86efac 45%,
+    #22c55e 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 .nav-right {

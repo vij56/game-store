@@ -9,7 +9,12 @@ export default function GameList({ games, addToCart }) {
   return (
     <div className="game-grid">
       {games.map((game) => (
-        <GameCard key={game._id} game={game} onAddToCart={addToCart} />
+        <GameCard
+          key={game._id}
+          game={game}
+          onAddToCart={addToCart}
+          titleTopPriceBottom={true}
+        />
       ))}
     </div>
   );

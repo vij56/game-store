@@ -1,45 +1,113 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import QRCode from "qrcode";
+import toast from "react-hot-toast";
+import { buildInvoicePdf } from "../utils/invoicePdf";
 import "./Success.css";
-
-const loremDescription = `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eu tincidunt nunc. Duis consequat nibh at augue varius, sit amet gravida sem vulputate. Donec ac ligula a odio feugiat molestie. Sed tristique, erat vel volutpat ullamcorper, dolor est fermentum purus, ut posuere lorem velit et sapien.
-
-Mauris in augue eget lectus volutpat tincidunt. Proin elementum ultrices diam, ut egestas nibh suscipit vitae. Vivamus aliquet mauris vel justo luctus, ut faucibus sem pulvinar. Nunc vitae dignissim massa. Morbi vitae vestibulum lacus. Quisque non tristique lorem.
-
-Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In sit amet magna at metus feugiat malesuada. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`;
 
 export default function Success() {
   const navigate = useNavigate();
+  const [galleryGames, setGalleryGames] = useState([]);
+  const [latestOrder, setLatestOrder] = useState(null);
+  const [invoicePublicUrl, setInvoicePublicUrl] = useState("");
+  const instructionsDownloadUrl = `${import.meta.env.VITE_API_URL}/api/instructions/download`;
 
-  const instructionText = useMemo(
-    () => `
-THANK YOU FOR YOUR PURCHASE!
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-INSTALLATION GUIDE:
-1. Open your game library in this account.
-2. Download your purchased game files.
-3. Extract the archive using WinRAR or 7zip.
-4. Run setup.exe as administrator.
-5. Follow on-screen instructions to complete installation.
+    const loadGameImages = async () => {
+      try {
+        const ownedRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/orders/owned`,
+          {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          },
+        );
 
-NOTE:
-- Keep this file for future reference.
-- Contact support if your download link does not work.
+        if (ownedRes.ok) {
+          const ownedData = await ownedRes.json();
+          if (Array.isArray(ownedData) && ownedData.length > 0) {
+            setGalleryGames(ownedData.filter((g) => g?.image));
+            return;
+          }
+        }
 
-Enjoy your game!`,
-    [],
-  );
+        const allGamesRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/games`,
+        );
+        if (!allGamesRes.ok) return;
+
+        const allGamesData = await allGamesRes.json();
+        if (!Array.isArray(allGamesData)) return;
+        setGalleryGames(allGamesData.filter((g) => g?.image));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadGameImages();
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const loadLatestInvoiceData = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/orders/invoice/latest-link`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data?.order) return;
+
+        setLatestOrder(data.order);
+        setInvoicePublicUrl(data.invoiceUrl || "");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadLatestInvoiceData();
+  }, []);
+
+  const handleDownloadInvoicePdf = async () => {
+    if (!latestOrder) {
+      toast.error("Invoice is not ready yet");
+      return;
+    }
+
+    try {
+      const qrDataUrl = invoicePublicUrl
+        ? await QRCode.toDataURL(invoicePublicUrl, {
+            margin: 1,
+            width: 160,
+            errorCorrectionLevel: "M",
+          })
+        : null;
+
+      const { doc, invoiceNumber } = buildInvoicePdf({
+        order: latestOrder,
+        qrDataUrl,
+        invoiceUrl: invoicePublicUrl,
+      });
+
+      doc.save(`Invoice-${invoiceNumber}.pdf`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to generate invoice PDF");
+    }
+  };
 
   const handleDownload = () => {
-    const blob = new Blob([instructionText], { type: "text/plain" });
     const link = document.createElement("a");
 
-    link.href = URL.createObjectURL(blob);
-    link.download = "Purchase_Instructions.txt";
+    link.href = instructionsDownloadUrl;
     link.click();
-
-    URL.revokeObjectURL(link.href);
   };
 
   return (
@@ -48,13 +116,16 @@ Enjoy your game!`,
         <p className="success-kicker">PAYMENT CONFIRMED</p>
         <h1>Purchase successful. You are all set.</h1>
         <p className="success-subtitle">
-          Your order is confirmed and ready. Download the instructions file now
-          and keep it saved for later.
+          Your order is confirmed. Download the instructions file now and keep
+          it saved for later.
         </p>
 
         <div className="success-actions">
           <button className="btn" onClick={handleDownload}>
-            Download
+            Download Instructions PDF
+          </button>
+          <button className="btn" onClick={handleDownloadInvoicePdf}>
+            Download Invoice PDF
           </button>
           <button
             className="btn secondary"
@@ -65,9 +136,26 @@ Enjoy your game!`,
         </div>
       </section>
 
-      <section className="success-description card">
-        <h2>Description</h2>
-        <p>{loremDescription}</p>
+      <section className="success-gallery card">
+        <h2>Game Gallery</h2>
+        <p className="success-gallery-copy">
+          Real game covers from your database.
+        </p>
+        {galleryGames.length === 0 ? (
+          <p className="success-gallery-empty">No game images available yet.</p>
+        ) : (
+          <div className="success-gallery-grid">
+            {galleryGames.slice(0, 8).map((game) => (
+              <img
+                key={game._id}
+                src={game.image}
+                alt={game.title || "Game cover"}
+                className="success-gallery-image"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

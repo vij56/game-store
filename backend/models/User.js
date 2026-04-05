@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  libraryRevokedGames: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Game",
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

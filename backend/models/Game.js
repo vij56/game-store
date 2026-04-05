@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 
 const gameSchema = new mongoose.Schema({
+  appId: {
+    type: Number,
+    required: true,
+    min: 10000,
+    max: 9999999,
+    validate: {
+      validator: Number.isInteger,
+      message: "appId must be a whole number",
+    },
+  },
   title: String,
   price: Number,
   salePrice: Number,

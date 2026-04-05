@@ -5,10 +5,26 @@ import "./GameForm.css";
 const GameForm = ({ game, onClose }) => {
   const isEdit = game && game._id;
 
+  const computeSalePrice = (priceValue, discountPercentValue) => {
+    const price = Number(priceValue);
+    const discountPercent = Number(discountPercentValue);
+
+    if (!Number.isFinite(price) || price <= 0) return "";
+    if (!Number.isFinite(discountPercent) || discountPercent <= 0) {
+      return String(Math.round(price));
+    }
+
+    const clampedPercent = Math.min(Math.max(discountPercent, 0), 100);
+    const sale = price - (price * clampedPercent) / 100;
+    return String(Math.max(0, Math.round(sale)));
+  };
+
   const [form, setForm] = useState({
+    appId: "",
     title: "",
     description: "",
     price: "",
+    discountPercent: "",
     salePrice: "",
     image: "",
   });
@@ -18,20 +34,60 @@ const GameForm = ({ game, onClose }) => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    const price = Number(game.price || 0);
+    const salePrice = Number(game.salePrice || game.price || 0);
+    const discountPercent =
+      price > 0
+        ? Math.max(
+            0,
+            Math.min(100, Math.round(((price - salePrice) / price) * 100)),
+          )
+        : 0;
+
     setForm({
+      appId: game.appId || "",
       title: game.title || "",
       description: game.description || "",
       price: game.price || "",
+      discountPercent: discountPercent || "",
       salePrice: game.salePrice || "",
       image: game.image || "",
     });
   }, [game]);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    if (name === "appId") {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 7);
+      setForm((prev) => ({
+        ...prev,
+        appId: digitsOnly,
+      }));
+      return;
+    }
+
+    if (name === "price" || name === "discountPercent") {
+      const digitsOnly = value.replace(/\D/g, "");
+      const normalizedValue =
+        name === "discountPercent" ? digitsOnly.slice(0, 3) : digitsOnly;
+
+      const nextPrice = name === "price" ? normalizedValue : form.price;
+      const nextDiscount =
+        name === "discountPercent" ? normalizedValue : form.discountPercent;
+
+      setForm((prev) => ({
+        ...prev,
+        [name]: normalizedValue,
+        salePrice: computeSalePrice(nextPrice, nextDiscount),
+      }));
+      return;
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleImageChange = async (e) => {
@@ -66,8 +122,19 @@ const GameForm = ({ game, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    if (!form.title || !form.price || !form.image) {
-      toast.error("Please fill title, price and image");
+    const parsedAppId = Number(form.appId);
+
+    if (!form.title || !form.price || !form.image || !form.appId) {
+      toast.error("Please fill app id, title, price and image");
+      return;
+    }
+
+    if (
+      !Number.isInteger(parsedAppId) ||
+      parsedAppId < 10000 ||
+      parsedAppId > 9999999
+    ) {
+      toast.error("App ID must be a 5 to 7 digit number");
       return;
     }
 
@@ -81,8 +148,12 @@ const GameForm = ({ game, onClose }) => {
 
       const payload = {
         ...form,
+        appId: parsedAppId,
         price: Number(form.price),
-        salePrice: Number(form.salePrice || form.price),
+        discountPercent: Number(form.discountPercent || 0),
+        salePrice: Number(
+          computeSalePrice(form.price, form.discountPercent || 0),
+        ),
       };
 
       const res = await fetch(url, {
@@ -123,6 +194,20 @@ const GameForm = ({ game, onClose }) => {
 
         <div className="form-grid">
           <label>
+            App ID
+            <input
+              name="appId"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={7}
+              value={form.appId}
+              onChange={handleChange}
+              placeholder="5 to 7 digits"
+            />
+          </label>
+
+          <label>
             Title
             <input
               name="title"
@@ -136,10 +221,26 @@ const GameForm = ({ game, onClose }) => {
             Price
             <input
               name="price"
-              type="number"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               value={form.price}
               onChange={handleChange}
               placeholder="Regular price"
+            />
+          </label>
+
+          <label>
+            Discount %
+            <input
+              name="discountPercent"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={3}
+              value={form.discountPercent}
+              onChange={handleChange}
+              placeholder="e.g. 80"
             />
           </label>
 
@@ -149,7 +250,7 @@ const GameForm = ({ game, onClose }) => {
               name="salePrice"
               type="number"
               value={form.salePrice}
-              onChange={handleChange}
+              readOnly
               placeholder="Discounted price"
             />
           </label>
