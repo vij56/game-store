@@ -288,9 +288,7 @@ export default function GameDetails() {
           </div>
 
           <div className="gd-actions">
-            <button className="btn gd-add-btn" onClick={() => addToCart()}>
-              Add to Cart
-            </button>
+            {/* Add to Cart button hidden as per requirements */}
           </div>
 
           <div className="gd-meta-grid">

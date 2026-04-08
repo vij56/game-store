@@ -659,9 +659,7 @@ export default function Checkout() {
 
                   <span>{item.quantity}</span>
 
-                  <button onClick={() => addToCart(item.game._id, item.game)}>
-                    +
-                  </button>
+                  {/* Add to Cart button hidden as per requirements */}
                 </div>
 
                 <button
@@ -894,7 +892,7 @@ export default function Checkout() {
                 <div key={index} className="column-wrapper">
                   <GameCard
                     game={game}
-                    onAddToCart={(g) => addToCart(g._id, g)}
+                    onAddToCart={undefined}
                     disableClick={isDragging}
                     dragging={isDragging}
                   />

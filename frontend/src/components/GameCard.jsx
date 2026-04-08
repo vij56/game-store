@@ -64,17 +64,7 @@ export default function GameCard({
       {mode !== "library" && (
         <div className="hover-overlay">
           <div className="hover-buttons">
-            {/* ADD TO CART */}
-            <button
-              className="btn add-cart-btn"
-              onClick={(e) => {
-                e.stopPropagation(); // 🔒 prevent any parent trigger
-                if (dragging) return;
-                onAddToCart && onAddToCart(game);
-              }}
-            >
-              Add to Cart
-            </button>
+            {/* ADD TO CART button hidden as per requirements */}
 
             {/* INFO */}
             <button

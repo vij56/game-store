@@ -12,7 +12,7 @@ export default function GameList({ games, addToCart }) {
         <GameCard
           key={game._id}
           game={game}
-          onAddToCart={addToCart}
+          onAddToCart={undefined}
           titleTopPriceBottom={true}
         />
       ))}

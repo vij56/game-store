@@ -308,7 +308,7 @@ function App() {
         </a>
       </CookieConsent>
 
-      <PurchasePopup />
+      {/* <PurchasePopup /> Hidden as per requirements */}
     </>
   );
 }

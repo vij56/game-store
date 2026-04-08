@@ -275,7 +275,7 @@ export default function Cart() {
                 <div key={index} className="column-wrapper">
                   <GameCard
                     game={game}
-                    onAddToCart={(g) => addToCart(g._id, g)}
+                    onAddToCart={undefined}
                     disableClick={true}
                     dragging={isDragging}
                     titleTopPriceBottom={true}
